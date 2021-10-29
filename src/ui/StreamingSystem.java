@@ -174,7 +174,7 @@ public class StreamingSystem {
 		numCustomerLevel = (numCustomerLevel-1);
 		sc.nextLine();
 
-		if(streamingChannel.thereIsSpaceForSuscriber() == -1){
+		if(streamingChannel.thereIsSpaceForSubscriber() == -1){
 			System.out.println("You can't create more subscribers!!!!");
 		}
 		else{
