@@ -39,9 +39,8 @@ public class StreamingSystem {
 			    "1) Create a Channel\n"+
 			    "2) Manage subscribers\n"+
 			    "3) Show Channel information\n"+
+			    "4) Manage products\n"+
 			    "0) Exit"
-
-
 			    );
 		optionMenu= sc.nextInt();
 		sc.nextLine();
@@ -68,6 +67,7 @@ public class StreamingSystem {
 		    	showMenuSuscriber();
 		    }
 		    break;
+
 		case 3:
 		   System.out.println("///CHANNEL INFORMATION///");
 		   if(streamingChannel == null){
@@ -77,6 +77,15 @@ public class StreamingSystem {
 		   	    System.out.println(streamingChannel.toString());
 		   }
 		   break;
+
+		case 4:
+		    if(streamingChannel == null){
+		        System.out.println("You must fill in the channel information first!!!!");	
+		    }
+		    else{
+		    	ShowMenuProducts();
+		    }
+		    break;
 
 		default:
 		    System.out.println("Invalid option!!!!");
@@ -129,6 +138,37 @@ public class StreamingSystem {
 		    System.out.println("No valid option!!!!");
 		}
 
+	}
+
+	private void ShowMenuProducts(){
+		int optionMenu = 0;
+		System.out.println("/////MANAGE PRODUCTS/////");
+		System.out.println(
+			    "Products Menu \n"+
+			    "(1) Create a serie\n"+
+		 	    "(2) Create a film\n"+
+		 	    "(3) Show products"
+		        );
+
+		optionMenu = sc.nextInt();
+		sc.nextLine();
+
+		switch(optionMenu){
+		case 1:
+		    createASerie();
+			break;
+	    case 2:
+	        createAFilm();
+			break;
+
+		case 3:
+		    System.out.println("///// PRODUCTS INFORMATION/////");
+		    System.out.println(streamingChannel.showInformationOfProducts());
+		    break;
+
+	    default:
+		    System.out.println("No valid option!!!!");
+		}
 	}
 
 	private void createASuscriber(){
@@ -201,6 +241,168 @@ public class StreamingSystem {
 
 		streamingChannel = new Channel(nit,adress,adressWebSite);
 		System.out.println("The channel has been created successfully");
+	}
+
+	private void createAFilm(){
+		String productName, movieDirector, synopsis, producer;
+		int day,month,year,numCategory, minimumAge;
+		boolean next = true;
+
+		System.out.println("///CREATE A FILM///");
+		System.out.println("Please enter the following information");
+		System.out.println("Name: ");
+		productName = sc.nextLine();
+		next = streamingChannel.verifyNameExist(productName);
+
+		while(next == true){
+			System.out.println("The name has been already registered, please enter another name");
+			productName = sc.nextLine();
+            next = streamingChannel.verifyNameExist(productName);
+		}
+
+		System.out.println("Name of the director: ");
+		movieDirector = sc.nextLine();
+		System.out.println("sypnosis: ");
+		synopsis = sc.nextLine();
+
+		System.out.println("*** RELEASE DATE***");
+
+		System.out.println("Day: ");
+		day = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Month: ");
+		month = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Year: ");
+		year = sc.nextInt();
+		sc.nextLine();
+		
+
+		System.out.print("Name of the producer: \n");
+		producer = sc.nextLine();
+
+		System.out.println("Minimun age: ");
+		minimumAge = sc.nextInt();
+		sc.nextLine();
+
+		System.out.println("Movie category: \n"+
+			"1) Romantic\n"+
+			"2) Action\n"+
+			"3) Suspense\n"+
+			"4) Horror\n"+
+			"5) Comedy "
+			);
+
+
+		numCategory = sc.nextInt();
+		numCategory = (numCategory-1);
+		sc.nextLine();
+
+		if(streamingChannel.thereIsSpaceForProduct() == -1){
+			System.out.println("You can't create more products!!!!");
+		}
+		else{
+			streamingChannel.addFilm(productName,movieDirector, synopsis,day,
+				month, year,producer,minimumAge,numCategory);
+			System.out.println("The film has been created successfully");
+		}
+
+	}
+
+	private void createASerie(){
+		String productName,movieDirector,synopsis,anwsCensored,razonCensored, pathTrailer;
+		int day,month,year, numActors, numSeason, num, scheduledEpisodes;
+		int publishedEpisodes;
+		boolean censoredSerie ;
+		boolean next = true;
+
+
+
+		System.out.println("///CREATE A SERIE///");
+		System.out.println("Please enter the following information");
+		System.out.println("Name: ");
+		productName = sc.nextLine();
+		next = streamingChannel.verifyNameExist(productName);
+		while(next == true){
+			System.out.println("The name has been already registered, please enter another name");
+			productName = sc.nextLine();
+            next = streamingChannel.verifyNameExist(productName);
+		}
+
+		System.out.println("Name of the director: ");
+		movieDirector = sc.nextLine();
+
+		System.out.println("Synopsis: ");
+		synopsis = sc.nextLine();
+
+		System.out.println("*** RELEASE DATE***");
+		System.out.println("Day: ");
+		day = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Month: ");
+		month = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Year: ");
+		year = sc.nextInt();
+		sc.nextLine();
+
+		System.out.println("Has been the serie censored? Yes or No");
+		anwsCensored = sc.nextLine().toUpperCase();
+		if(anwsCensored.equals("YES")){
+			censoredSerie = true;
+			System.out.println("Why the serie was censored?");
+			razonCensored = sc.nextLine();
+		}
+		else{
+			censoredSerie = false;
+			razonCensored = "The serie has not been censored!!!!";
+		}
+
+		System.out.println("Number of main actors: ");
+		numActors = sc.nextInt();
+		sc.nextLine();
+
+		//Declaration of auxiliary arrangement of actors
+		String[] auxActors = new String[numActors];
+
+        System.out.println("Main actors: ");
+		for(int i = 0; i<auxActors.length;i++){
+			System.out.println("Please enter the name of the main actor "+(i+1)+":");
+			auxActors[i] = sc.nextLine();
+
+		}
+
+		System.out.println("Number of seasons: ");
+		numSeason = sc.nextInt();
+		sc.nextLine();
+
+
+		System.out.println("***SEASON 1***");
+		System.out.println("Please enter the following information");
+		num = 1;
+		System.out.println("Number of scheduled episodes: ");
+		scheduledEpisodes = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Number of published episodes: ");
+		publishedEpisodes = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Thrailer link: ");
+		pathTrailer = sc.nextLine();
+
+
+
+
+
+		if(streamingChannel.thereIsSpaceForProduct() == -1){
+			System.out.println("You can't create more products!!!!");
+		}
+		else{
+			streamingChannel.addSerie(productName,movieDirector,synopsis, day,month,year,
+		    censoredSerie,razonCensored,numActors, numSeason,num,scheduledEpisodes,
+		    publishedEpisodes, pathTrailer, auxActors);
+		    System.out.println("The serie has been created successfully");
+		}
+
 	}
 
 	private void deactiveASubscriber(){

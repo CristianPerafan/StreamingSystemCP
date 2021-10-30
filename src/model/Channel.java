@@ -91,6 +91,71 @@ public class Channel{
 		subscribers[i] = new Subscriber(id,fullName,age, consumptionHours, numCustomerLevel);
 	}	
 
+	///Method Channel: addFilm (void) //
+
+	/**
+      * Description: in this method we will add a film type object 
+      to the product class, because by inheritance this object can behave as a subclass.
+      * @param productName String, it represents the name of the product (film). 
+      * @param movieDirector String, it represents the name of the director (film). 
+      * @param synopsis int, it represents the abstract of the product (film) 
+      * @param day int, it represents represents the day when the product was released.
+      * @param month int, it represents represents the month when the product was released.
+      * @param year int, it represents represents the year when the product was released.
+      * @param producer String, it represents the name of the producer of the product.
+      * @param minimumAge int, it  represents the recommended age to watch the movie.
+      * @param numCategory int, it  represents a number that identifies the category 
+       movie of the film.
+      */
+
+	public void addFilm(String productName, String movieDirector, String synopsis, int day,
+        int month, int year, String producer, int minimumAge, int numCategory){
+
+		int i = thereIsSpaceForProduct();
+		products[i] = new Films(productName,movieDirector,synopsis,day,
+        month,year,producer,minimumAge,numCategory);
+	}
+
+	///Method Channel: addSerie (void) //
+
+	/**
+      * Description: in this method we will add a serie type object 
+      to the product class, because by inheritance this object can behave as a subclass.
+      * @param productName String, it represents the name of the product (film). 
+      * @param movieDirector String, it represents the name of the director (film). 
+      * @param synopsis int, it represents the abstract of the product (film) 
+      * @param day int, it represents represents the day when the product was released.
+      * @param month int, it represents represents the month when the product was released.
+      * @param year int, it represents represents the year when the product was released.
+      * @param censoredSerie boolean, if censoredSerie = true the serie has been censored, 
+      else the serie hasn´t been censored
+      * @param razonCensored String, if censoredSerie = true, it represents the razon why
+      the serie was censored.
+      * @param numActors int, it  represents the number of principal actor that has the 
+      serie.
+      * @param numSeason int, it  represents the amount of seasons of the serie.
+      * @param num int, it  represents the number of one season(Season 1, Season 2 ..etc).
+      * @param scheduledEpisodes int, it  represents the amount of scheduled episodes
+      of the serie.
+      * @param publishedEpisodes int, it  represents the amount of published episodes of
+      the serie.
+      * @param  pathTrailer String, it  represents the link to the video of the thrailer.
+      * @param  auxActors String [], it  represents an auxiliary array where the name 
+      of the actors are saved .
+      */
+
+	public void addSerie(String productName, String movieDirector, String synopsis, int day,
+        int month, int year, boolean censoredSerie, String razonCensored, int numActors, 
+    	int numSeason, int num, int scheduledEpisodes, int publishedEpisodes, 
+        String pathTrailer, String [] auxActors){
+
+		int i = thereIsSpaceForProduct();
+		products[i] = new Series(productName,movieDirector,synopsis, day,month,year,
+		censoredSerie,razonCensored,numActors,numSeason,num,scheduledEpisodes,publishedEpisodes, 
+        pathTrailer, auxActors);
+
+	}
+
 
 	///Method Channel: thereIsSpaceForSuscriber (int) //
 	/**
@@ -293,6 +358,77 @@ public class Channel{
 
 		out += "Name: "+name+"\n";
 		out += "Hours: "+hoursMenor;
+		return out;
+	}
+
+	///Method Channel: thereIsSpaceForProduct(int) //
+
+	/**
+      * Description: in this method we will ckek if there is a space to save a new 
+      product
+      * @return pos int, it represents the position in the array of products where
+      we can save a new product, if pos = -1 there aren´t positions to save a new
+      product.
+      */
+
+
+	public int thereIsSpaceForProduct(){
+		int pos = -1;
+		boolean flag = false;
+
+		for(int i = 0; i <products.length && !flag;i++){
+			if(products[i] == null){
+				flag = true;
+				pos = i;
+			}
+		}
+		return pos;
+	}
+
+	///Method Channel:  verifyNameExist(boolean) //
+
+	/**
+      * Description: in this method we will ckek if the name of a new product has been
+      registered.
+      * @param productName String, it represents the name of the new product.  
+      * @return out boolean, if out = true the name has been already registered, else
+      the name hasn't been registered.
+      */
+
+
+	public boolean verifyNameExist(String productName){
+		boolean  out = false;
+
+		for(int i = 0; i<products.length;i++){
+			if(products[i] != null){
+				if(products[i].getProductName().equals(productName)){
+					out = true;
+				}
+			}
+
+		}
+
+		return out;
+	}
+
+	///Method Channel: showInformationOfProducts(String) //
+
+	/**
+      * Description: in this method we will concatenate the information of all the
+      products that have been registered . 
+      * @return out String, it represents the information of the all products.
+      */
+
+
+
+	public String showInformationOfProducts(){
+		String out = "";
+		for(int i = 0; i<products.length; i++){
+			if(products[i] != null){
+				out += "*** Product "+(i+1)+" ***\n";
+				out += products[i].toString()+"\n";
+			}
+		}
 		return out;
 	}
 	
