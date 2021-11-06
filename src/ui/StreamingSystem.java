@@ -32,6 +32,14 @@ public class StreamingSystem {
 		}while(optionMenu != 0);
 	}
 
+	///Method StreamingSystem:  showMenun(String) //
+	/**
+      * Description: in this method we will show to the user the information
+      of the main menu of the system and we will ask to the user for one
+      option.
+      * @return optionMenu int, it contains the option entered by the user.
+      */
+
 	public int showMenu(){
 		int optionMenu = 0;
 		System.out.println(
@@ -47,7 +55,12 @@ public class StreamingSystem {
 		return optionMenu;
 	}
 
-	
+	///Method StreamingSystem:  executeOperation(void) //
+	/**
+      * Description: in this method we will execute the option entered by the 
+      user.
+      @param operation int, it represents the option entered by the user.
+      */
 
 	public void executeOperation(int operation){
 		switch(operation){
@@ -69,7 +82,7 @@ public class StreamingSystem {
 		    break;
 
 		case 3:
-		   System.out.println("///CHANNEL INFORMATION///");
+		   System.out.println("/// CHANNEL INFORMATION ///");
 		   if(streamingChannel == null){
 		   	    System.out.println("You must fill in the channel information first!!!!");	
 		   }
@@ -92,9 +105,15 @@ public class StreamingSystem {
 		}
 	}
 
+	///Method StreamingSystem:  showMenuSuscriber (void) //
+	/**
+      * Description: in this method we will show the information of the 
+      subscribers menu and we will ask to the user for one option
+      */
+
 	private void showMenuSuscriber(){
 		int optionMenu = 0;
-		System.out.println("///MANAGE SUBSCRIBERS///");
+		System.out.println("/// MANAGE SUBSCRIBERS ///");
 
 		System.out.println(
 				"Suscriber Menu\n" +
@@ -102,13 +121,18 @@ public class StreamingSystem {
 				"(2) Deactive a suscriber\n"+
 				"(3) Show the information of all subscribers\n"+
 				"(4) Active subscribers for each type of customer\n"+
-				"(5) Minor with greater number of hours willing to consume"
+				"(5) Minor with greater number of hours willing to consume\n"+
+				"(0) Back"
+				
 
 				);	
 		optionMenu = sc.nextInt();
 		sc.nextLine();
 		
 		switch(optionMenu) {
+		case 0:
+		    break;
+		    
 		case 1:
 			createASuscriber();
 			break;
@@ -137,23 +161,36 @@ public class StreamingSystem {
 		default:
 		    System.out.println("No valid option!!!!");
 		}
-
 	}
+
+	///Method StreamingSystem:   ShowMenuProducts (void) //
+	/**
+      * Description: in this method we will show the information of the 
+      products menu and we will ask to the user for one option
+      */
 
 	private void ShowMenuProducts(){
 		int optionMenu = 0;
-		System.out.println("/////MANAGE PRODUCTS/////");
+		System.out.println("///// MANAGE PRODUCTS /////");
 		System.out.println(
 			    "Products Menu \n"+
 			    "(1) Create a serie\n"+
 		 	    "(2) Create a film\n"+
-		 	    "(3) Show products"
+		 	    "(3) Show all products\n"+
+				"(4) Find a product\n"+
+				"(5) Create the next season of a serie\n"+
+				"(6) Show all the films according to a category\n"+
+				"(7) Show all the series and its information of the last season\n"+
+				"(0) Back"
 		        );
 
 		optionMenu = sc.nextInt();
 		sc.nextLine();
 
 		switch(optionMenu){
+		case 0:
+		    break;
+		
 		case 1:
 		    createASerie();
 			break;
@@ -162,14 +199,68 @@ public class StreamingSystem {
 			break;
 
 		case 3:
-		    System.out.println("///// PRODUCTS INFORMATION/////");
-		    System.out.println(streamingChannel.showInformationOfProducts());
+		    if(streamingChannel.thereIsntProducts()){
+				System.out.println("There are not products registered!!!!");
+				
+			}
+			else{
+				System.out.println("///// PRODUCTS INFORMATION /////");
+		        System.out.println(streamingChannel.showInformationOfProducts());
+			}
+		    
 		    break;
+		case 4:
+		    if(streamingChannel.thereIsntProducts()){
+				System.out.println("There are not products registered!!!!");
+				
+			}
+			else{
+				findAProduct();
+				
 
+
+			}
+		    break;
+			
+	    case 5:
+		    if(streamingChannel.thereIsntProducts()){
+				System.out.println("There are not products registered!!!!");
+				
+			}
+			else{
+				createANewSerie();
+			}
+		    break;
+		case 6:
+		    if(streamingChannel.thereIsntProducts()){
+				System.out.println("There are not products registered!!!!");
+				
+			}
+			else{
+		        showAllTheFilmsAccordingToACategory();
+		    }
+		 
+			break;
+		case 7:
+		    if(streamingChannel.thereIsntProducts()){
+				System.out.println("There are not products registered!!!!");
+				
+			}
+			else{
+				showAllTheSeriesAndItsLastSeason();
+		    }
+		    break;
 	    default:
 		    System.out.println("No valid option!!!!");
 		}
 	}
+
+	///Method StreamingSystem:    createASuscriber (void) //
+	/**
+      * Description: in this method we will ask the neccesary information 
+      to create a subscriber and we will call the method addSubscriber
+      of the controlling class
+      */
 
 	private void createASuscriber(){
 		String id,fullName; 
@@ -224,6 +315,13 @@ public class StreamingSystem {
 
 	}
 
+	///Method StreamingSystem:    createASuscriber (void) //
+	/**
+      * Description: in this method we will ask the neccesary information 
+      to create a channel and we will call the constructor method to
+      create a Channel of the controlling class
+      */
+
 	private void createAChannel(){
 		String nit, adress, adressWebSite;
 
@@ -233,7 +331,7 @@ public class StreamingSystem {
 		System.out.println("Nit: ");
 		nit = sc.nextLine();
 
-		System.out.println("Adress::");
+		System.out.println("Adress:");
 		adress = sc.nextLine();
 
 		System.out.println("Adress web site: ");
@@ -242,6 +340,12 @@ public class StreamingSystem {
 		streamingChannel = new Channel(nit,adress,adressWebSite);
 		System.out.println("The channel has been created successfully");
 	}
+
+	///Method StreamingSystem: createAFilm (void) //
+	/**
+      * Description: in this method we will ask the neccesary information 
+      to create a Film and we will call the method addFilm of the controlling class
+      */
 
 	private void createAFilm(){
 		String productName, movieDirector, synopsis, producer;
@@ -309,6 +413,12 @@ public class StreamingSystem {
 
 	}
 
+	///Method StreamingSystem: createASerie (void) //
+	/**
+      * Description: in this method we will ask the neccesary information 
+      to create a Serie and we will call the method addSerie of the controlling class
+      */
+
 	private void createASerie(){
 		String productName,movieDirector,synopsis,anwsCensored,razonCensored, pathTrailer;
 		int day,month,year, numActors, numSeason, num, scheduledEpisodes;
@@ -372,9 +482,6 @@ public class StreamingSystem {
 
 		}
 
-		System.out.println("Number of seasons: ");
-		numSeason = sc.nextInt();
-		sc.nextLine();
 
 
 		System.out.println("***SEASON 1***");
@@ -389,21 +496,23 @@ public class StreamingSystem {
 		System.out.println("Thrailer link: ");
 		pathTrailer = sc.nextLine();
 
-
-
-
-
 		if(streamingChannel.thereIsSpaceForProduct() == -1){
 			System.out.println("You can't create more products!!!!");
 		}
 		else{
 			streamingChannel.addSerie(productName,movieDirector,synopsis, day,month,year,
-		    censoredSerie,razonCensored,numActors, numSeason,num,scheduledEpisodes,
+		    censoredSerie,razonCensored,numActors,num,scheduledEpisodes,
 		    publishedEpisodes, pathTrailer, auxActors);
 		    System.out.println("The serie has been created successfully");
 		}
 
 	}
+
+	///Method StreamingSystem: deactiveASubscriber (void) //
+	/**
+      * Description: in this method we will ask the number of the subscriber that
+      the user want to delete and we will delete the subscriber.
+      */
 
 	private void deactiveASubscriber(){
 		int numDeactive;
@@ -435,8 +544,99 @@ public class StreamingSystem {
 		}
 	}
 
+	///Method StreamingSystem: findAProduct (void) //
+	/**
+      * Description: in this method we will ask to the user the name of a product
+      and then we will show the information of that product.
+      */
 
 
+	private void findAProduct(){
+
+        String pName;
+
+		System.out.println("///// FIND A PRODUCT /////");
+	    System.out.println("Please enter the name of the product: ");
+	    pName = sc.nextLine();
+	    if(streamingChannel.verifyNameExist(pName)){
+	    	System.out.println( streamingChannel.consultInformationOfAProduct(pName));
+	    }
+	    else{
+	    	System.out.println("The product has not been registered!!!!");
+	    }
+	}
+
+	///Method StreamingSystem: createANewSerie (void) //
+	/**
+      * Description: in this method we will ask to the user the necessary
+      information to create a new season and then we will create the season.
+      */
 	
+	private void createANewSerie(){
+		String productName, pathTrailer;
+		int scheduledEpisodes,publishedEpisodes;
 
+		System.out.println("///// CREATE THE NEXT SEASON OF A SERIE /////");
+		System.out.println("Please, enter the name of the season: ");
+		productName = sc.nextLine();
+		if(streamingChannel.verifyNameExist(productName)){
+			System.out.println("Enter the scheduled episodes of the serie: ");
+			scheduledEpisodes = sc.nextInt();
+			sc.nextLine();
+			System.out.println("Enter the published episodes of the serie: ");
+			publishedEpisodes = sc.nextInt();
+			sc.nextLine();
+			System.out.println("enter the link of the thrailer of the serie: ");
+			pathTrailer = sc.nextLine();
+			System.out.println(streamingChannel.createAnewSeason(productName,
+				scheduledEpisodes,publishedEpisodes,pathTrailer));
+
+		}
+		else{
+			System.out.println("The serie does not exists!!!!");
+		}
+	}
+
+	///Method StreamingSystem: showAllTheFilmsAccordingToACategory (void) //
+	/**
+      * Description: in this method we will ask to the user one category film
+      and then we will show all the films according to that category
+      */
+
+	private void showAllTheFilmsAccordingToACategory(){
+
+		int numCategory;
+		System.out.println("///// SHOW ALL THE FILMS ACORDING TO A CATEGORY /////");
+
+		System.out.println("Movie category: \n"+
+			"1) Romantic\n"+
+			"2) Action\n"+
+			"3) Suspense\n"+
+			"4) Horror\n"+
+			"5) Comedy "
+			);
+
+
+
+		numCategory = sc.nextInt();
+		sc.nextLine();
+		if(numCategory<1 || numCategory>5){
+			System.out.println("No valid option!!!");
+		}
+		else{
+			numCategory = (numCategory-1);
+			System.out.println(streamingChannel.showFilsmAccorCategory(numCategory));
+		}
+	}
+
+	///Method StreamingSystem: showAllTheSeriesAndItsLastSeason (void) //
+	/**
+      * Description: in this method we will show all the series registered and the
+      information of its last season.
+      */
+
+	private void showAllTheSeriesAndItsLastSeason(){
+		System.out.println("///// SHOW ALL THE SERIES AND ITS INFORMATION OF THE LAST SEASON /////");
+		System.out.println(streamingChannel.showAllSeriesAndItsLastSeason());
+	}
 }

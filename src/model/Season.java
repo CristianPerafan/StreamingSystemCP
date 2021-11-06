@@ -1,22 +1,28 @@
 package model;
 
 public class Season{
-	private int num;
 	private int scheduledEpisodes;
 	private int publishedEpisodes;
 	private String pathTrailer;
 
-	public Season(int num, int scheduledEpisodes, int publishedEpisodes, String pathTrailer){
-		this.num = num;
+	//Constructor method
+    /**
+      * Description: this is the constructor method to create a Serie.
+      * @param scheduledEpisodes int, it represents the amount of scheduled episodes
+      of the season.
+      * @param publishedEpisodes int, it represents the amount of published episodes
+      of the season.
+      * @param pathTrailer String, it represents the link to the thrailer video 
+      of the season.
+      */
+
+	public Season(int scheduledEpisodes, int publishedEpisodes, String pathTrailer){
 		this.scheduledEpisodes = scheduledEpisodes;
 		this.publishedEpisodes = publishedEpisodes;
 		this.pathTrailer = pathTrailer;
 	}
 
 	//GETTERS
-	public int getNum(){
-		return num;
-	}
 	public int getScheduleEpisodes(){
 		return scheduledEpisodes;
 	}
@@ -28,9 +34,6 @@ public class Season{
 	}
 
 	//SETTERS
-	public void setNum(int num){
-		this.num = num;
-	}
 	public void setScheduleEpisodes(int scheduledEpisodes){
 		this.scheduledEpisodes = scheduledEpisodes;
 	}
@@ -41,11 +44,10 @@ public class Season{
 		this.pathTrailer = pathTrailer;
 	}
 
-
+    //TO STRING
 	public String toString(){
 		String out = "";
-		out += "Season number: " + num + "\n";
-		out += "Number of episodes scheduled: "+ scheduledEpisodes+ " episodes\n";
+		out += "Number of scheduled episodes : "+ scheduledEpisodes+ " episodes\n";
 		out += "Number of published episodes: "+ publishedEpisodes +" episodes\n";
 		out += "Thrailer link: "+pathTrailer+"\n";
 		return out;

@@ -8,6 +8,18 @@ public class Films extends Product{
     private MovieCategory categoryMovie;
 
     //Constructor method
+    /**
+      * Description: this is the constructor method to create a Serie.
+      * @param productName String, it represents the name of the film.
+      * @param movieDirector String, it represents the name of the movie director.
+      * @param synopsis String, it represents an abstract of the film.
+      * @param day int, it represents the opening day of the film.
+      * @param month int, it represents the opening month of the film.
+      * @param year int, it represents the opening yeat of the film.
+      * @param producer String, it represent of the film producer.
+      * @param minimumAge int, it represent the recommended age to watch the movie.
+      * @param numCategory int, it represents a number that correspons to 
+      one movie category      */
     public Films(String productName, String movieDirector, String synopsis, int day,
         int month, int year, String producer, int minimumAge, int numCategory){
 
@@ -33,6 +45,26 @@ public class Films extends Product{
     	}
     }
 
+    //GETTERS
+    public String getProducer(){
+        return producer;
+    }
+    public int minimumAge(){
+        return minimumAge;
+    }
+    public MovieCategory getMovieCategory(){
+        return categoryMovie;
+    }
+    //SETTERS
+    public void setProducer(String producer){
+        this.producer = producer;
+    }
+    public void setMinimunAge(int minimumAge){
+        this.minimumAge = minimumAge;
+    }
+
+
+    //TO STRING
     @Override
     public String toString(){
     	String out = "";
@@ -43,10 +75,18 @@ public class Films extends Product{
 		out += "Fecha de estreno: "+releaseaDate.toString()+"\n";
 		out += "Producer: "+ producer+"\n";
 		out += "Minimum age: "+ minimumAge+"\n";
-        out += "Category: "+ categoryMovie;
+        out += "Category: "+ categoryMovie + "\n";
+		out += "";
 		return out;
 
     }
+    @Override
+    public String exampleClase(int par){
+		String out = "";
+		out = "This is a film "+ par;
+		
+		return out;
+	}
 
 
 

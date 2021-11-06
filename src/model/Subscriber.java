@@ -12,6 +12,17 @@ public class Subscriber{
 	private CustomerType typeLevel;
 
 	//Constructor method
+    /**
+      * Description: this is the constructor method to create a Serie.
+      * @param id String, it represents the id of the customer.
+      * @param fullName String, it represents the full name of customer. 
+      * @param  age int, it represents the age of the customer. 
+      * @param consumptionHours int, it represents the number of hours that
+      the client is willing to consume
+      * @param numCustomerLevel int, it represents a number that correspons to 
+      one type of customer.
+      */
+
 	public Subscriber(String id, String fullName, int age, int consumptionHours, 
 		int numCustomerLevel){
 		this.id = id;

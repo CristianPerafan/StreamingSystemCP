@@ -13,6 +13,14 @@ public class Channel{
 	private Product [] products;
 
 	//Constructor method
+	//Constructor method
+    /**
+      * Description: this is the constructor method to create a Channel.
+      * @param nit String, it represents the nit of the Channel.
+      * @param adress String, it represents the adress of the channel. 
+      * @param adressWebSite String, it represents the link of the web 
+      page of the Channel
+      */
 	public Channel(String nit, String adress,String adressWebSite){
 		name = "BlackNail";
 		this.nit = nit;
@@ -133,7 +141,6 @@ public class Channel{
       the serie was censored.
       * @param numActors int, it  represents the number of principal actor that has the 
       serie.
-      * @param numSeason int, it  represents the amount of seasons of the serie.
       * @param num int, it  represents the number of one season(Season 1, Season 2 ..etc).
       * @param scheduledEpisodes int, it  represents the amount of scheduled episodes
       of the serie.
@@ -146,12 +153,12 @@ public class Channel{
 
 	public void addSerie(String productName, String movieDirector, String synopsis, int day,
         int month, int year, boolean censoredSerie, String razonCensored, int numActors, 
-    	int numSeason, int num, int scheduledEpisodes, int publishedEpisodes, 
+    	int num, int scheduledEpisodes, int publishedEpisodes, 
         String pathTrailer, String [] auxActors){
 
 		int i = thereIsSpaceForProduct();
 		products[i] = new Series(productName,movieDirector,synopsis, day,month,year,
-		censoredSerie,razonCensored,numActors,numSeason,num,scheduledEpisodes,publishedEpisodes, 
+		censoredSerie,razonCensored,numActors,scheduledEpisodes,publishedEpisodes, 
         pathTrailer, auxActors);
 
 	}
@@ -418,9 +425,6 @@ public class Channel{
       products that have been registered . 
       * @return out String, it represents the information of the all products.
       */
-
-
-
 	public String showInformationOfProducts(){
 		String out = "";
 		for(int i = 0; i<products.length; i++){
@@ -428,6 +432,225 @@ public class Channel{
 				out += "*** Product "+(i+1)+" ***\n";
 				out += products[i].toString()+"\n";
 			}
+		}
+		return out;
+	}
+
+	///Method Channel:  thereIsntProducts(boolean) //
+
+	/**
+      * Description: in this method we will ckek if there are not products registered in 
+      the system.
+      * @return out boolean, if out = true there are not products registerdes in the system
+      else there are at least one product registered in the system.
+      */
+
+	public boolean thereIsntProducts(){
+		boolean out = true;
+		for(int i = 0; i< products.length;i++){
+			if(products[i] != null){
+				out = false;
+			}
+		}
+		return out;
+	}
+
+	///Method Channel:  consultInformationOfAProduct(String) //
+	/**
+      * Description: in this method we will look for the information of one
+      product of the name entered by the user.
+      * @param productName String, it represents the name entered by the user.  
+      * @return out String, it contains all the information of the product.
+      */
+
+	public String consultInformationOfAProduct(String productName){
+		String out = "";
+		boolean flag = false;
+		
+		
+		for(int i = 0; i<products.length || !flag;i++){
+			if(products[i] != null){
+				if(products[i].getProductName().equals(productName)){
+					
+					if(products[i] instanceof Films){
+						out += "THIS IS A FILM\n";
+					}
+					else if(products[i] instanceof Series){
+						out += "THIS IS A SERIE\n";
+					}
+					flag = true;
+					out += products[i].toString();
+				}
+			}
+		}
+
+		return out;
+	}
+
+	///Method Channel: createAnewSeason(String) //
+	/**
+      * Description: in this method we will add a new season of a serie.
+      * @param productName String, it represents the name entered of the serie
+      entered by the user.
+      * @param scheduledEpisodes int, amount of scheduled episodes of the new
+      season.
+      * @param publishedEpisodes int, amount of published episodes of the new
+      season of the serie 
+      * @param pathTrailer String, it represents the link of the thrailer of
+      the serie
+      * @return out String, it contains the message of the process' result
+      */
+	
+	public String createAnewSeason(String productName, int scheduledEpisodes,
+		int publishedEpisodes, String pathTrailer){
+		String out = "";
+		boolean flag = false;
+
+		for(int i = 0; i<products.length;i++){
+			if(products[i] != null){
+				if(products[i].getProductName().equals(productName)){
+					if(products[i] instanceof Series){
+						if(((Series)products[i]).thereIsSpaceInSeason() == -1){
+							out = "You can not create a new Serie";
+						}
+						else{
+							((Series)products[i]).addSeason(scheduledEpisodes,publishedEpisodes, pathTrailer);
+					        out = "The new season has been created";
+						}
+					}
+					else{
+						out = "There are not Series registered already";
+					}
+
+				}
+				else{
+					out = "The serie does not exist";
+				}
+			}
+
+		}
+		return out;
+	}
+
+	///Method Channel: showFilsmAccorCategory(String) //
+	/**
+      * Description: in this method we will concatenate the name of the films
+      according to a Category.
+      * @param numCategory int, it represents the num tha identifies a film
+      category
+      * @return out String, it contains the name of the films or a message when
+      there are films registered of that category
+      */
+
+	public String showFilsmAccorCategory(int numCategory){
+		String out = "";
+		boolean found = false;
+		if(numCategory == 0){
+			out += "// ROMANTIC FILMS //\n";
+		}
+		else if(numCategory == 1){
+            out += "// ACTION FILMS //\n";
+		}
+		else if(numCategory == 2){
+            out += "// SUSPENSE FILMS //\n";
+		}
+		else if(numCategory == 3){
+            out += "// HORROR FILMS //\n";
+		}
+		else if(numCategory == 4){
+			out += "// COMEDY FILMS //\n";
+		}
+
+		for(int i = 0;i<products.length;i++){
+			if(products[i] != null){
+				if(products[i] instanceof Films){
+					if(numCategory == 0){
+
+						if(((Films)products[i]).getMovieCategory() == MovieCategory.ROMANTIC){
+							out += products[i].getProductName()+"\n";
+							found = true;
+						}
+						
+					}
+					else if(numCategory == 1){
+						if(((Films)products[i]).getMovieCategory() == MovieCategory.ACTION){
+							out += products[i].getProductName()+"\n";
+							found = true;							
+						}
+					}
+					else if(numCategory == 2){
+						if(((Films)products[i]).getMovieCategory() == MovieCategory.SUSPENSE){
+							out += products[i].getProductName()+"\n";
+							found = true;
+						}
+					}
+					else if(numCategory == 3){
+
+						if(((Films)products[i]).getMovieCategory() == MovieCategory.HORROR){
+							
+							out += products[i].getProductName()+"\n";
+							found = true;
+						}
+					}
+					else if(numCategory == 4){
+						if(((Films)products[i]).getMovieCategory() == MovieCategory.COMEDY){
+							out += products[i].getProductName()+"\n";
+							found = true;
+						}
+					}
+				}
+			}
+		}
+
+		if(numCategory == 0 &&  found == false){
+			out = "There are not ROMANTIC films registered already ";
+		}
+		else if(numCategory == 1 &&  found == false){
+			out = "There are not ACTION films registered already ";
+		}
+		else if(numCategory == 2 &&  found == false){
+            out = "There are not SUSPENSE films registered already ";
+		}
+		else if(numCategory == 3 &&  found == false){
+            out = "There are not HORROR films registered already ";
+		}
+		else if(numCategory == 4 &&  found == false){
+            out = "There are not COMEDY films registered already ";
+		}
+
+		return out;
+	}
+
+	///Method Channel:  showAllSeriesAndItsLastSeason(String) //
+	/**
+      * Description: in this method we will concatenate the name of
+      all the series and the information of its last season.
+      * @return out String, it contains the name of the series and the
+      information of its last season or a message when there are not
+      series registered already.
+      */
+
+	
+
+	public String showAllSeriesAndItsLastSeason(){
+		String out="";
+		int contador = 1;
+		boolean found = false;
+		for(int i = 0; i<products.length;i++){
+			if(products[i] != null){
+				if(products[i] instanceof Series){
+					out += "*** Serie "+contador+" ***\n";
+					out += products[i].getProductName()+"\n";
+					out += "Last season information:\n";
+					out += ((Series)products[i]).obtainLastSeasonSerie()+"\n";
+					contador++;
+					found = true;
+				}
+			}
+		}
+
+		if(found = false){
+			out += "There are not series registered already!!!";
 		}
 		return out;
 	}
