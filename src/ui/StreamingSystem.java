@@ -228,7 +228,7 @@ public class StreamingSystem {
 				
 			}
 			else{
-				createANewSerie();
+				createASeason();
 			}
 		    break;
 		case 6:
@@ -315,7 +315,7 @@ public class StreamingSystem {
 
 	}
 
-	///Method StreamingSystem:    createASuscriber (void) //
+	///Method StreamingSystem:    createAChannel (void) //
 	/**
       * Description: in this method we will ask the neccesary information 
       to create a channel and we will call the constructor method to
@@ -572,7 +572,7 @@ public class StreamingSystem {
       information to create a new season and then we will create the season.
       */
 	
-	private void createANewSerie(){
+	private void createASeason(){
 		String productName, pathTrailer;
 		int scheduledEpisodes,publishedEpisodes;
 
